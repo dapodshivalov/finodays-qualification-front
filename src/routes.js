@@ -24,6 +24,7 @@ import Games from "views/Games";
 import Profile from "views/Profile";
 import Cat from "views/Cat";
 import Game from "./views/Game";
+import SpecialOffers from "./views/SpecialOffers";
 
 const dashboardRoutes = [
   {
@@ -31,6 +32,14 @@ const dashboardRoutes = [
     name: "Profile",
     icon: "pe-7s-pen",
     component: Profile,
+    layout: "/admin",
+    hidden: false
+  },
+  {
+    path: "/special-offers",
+    name: "Special Offers",
+    icon: "pe-7s-note2",
+    component: SpecialOffers,
     layout: "/admin",
     hidden: false
   },
