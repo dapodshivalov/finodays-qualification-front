@@ -21,10 +21,19 @@ import TableList from "views/TableList.jsx";
 import Typography from "views/Typography.jsx";
 import Icons from "views/Icons.jsx";
 import Games from "views/Games";
+import Profile from "views/Profile";
 import Cat from "views/Cat";
 import Game from "./views/Game";
 
 const dashboardRoutes = [
+  {
+    path: "/profile",
+    name: "Profile",
+    icon: "pe-7s-pen",
+    component: Profile,
+    layout: "/admin",
+    hidden: false
+  },
   {
     path: "/games",
     name: "Games",
@@ -73,22 +82,22 @@ const dashboardRoutes = [
   //   layout: "/admin",
   //   hidden: false
   // },
-  {
-    path: "/cat",
-    name: "",
-    icon: "pe-7s-graph",
-    component: Cat,
-    layout: "/admin",
-    hidden: true
-  },
-  {
-    path: "/game",
-    name: "",
-    icon: "pe-7s-graph",
-    component: Game,
-    layout: "/admin",
-    hidden: true
-  }
+  // {
+  //   path: "/cat",
+  //   name: "cat",
+  //   icon: "pe-7s-graph",
+  //   component: Cat,
+  //   layout: "/admin",
+  //   hidden: false
+  // },
+  // {
+  //   path: "/game",
+  //   name: "game",
+  //   icon: "pe-7s-graph",
+  //   component: Game,
+  //   layout: "/admin",
+  //   hidden: false
+  // }
 ];
 
 export default dashboardRoutes;

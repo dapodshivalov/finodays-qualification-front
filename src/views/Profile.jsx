@@ -5,7 +5,36 @@ import ChartistGraph from 'react-chartist';
 import Card from "components/Card/Card.jsx";
 import CategoriesList from "../components/CategoriesList/CategoriesList";
 
-class Games extends Component {
+class Profile extends Component {
+    // state = {
+    //     charts: {
+    //         id: -1,
+    //         name: "",
+    //         pictureUrl: "",
+    //         playerMinAge: 0,
+    //         playersMinAmount: 0,
+    //         playersMaxAmount: 0,
+    //         duration: 0,
+    //         releaseYear: 0,
+    //         rating: 0,
+    //         categories: [],
+    //         families: [],
+    //         designers: [],
+    //         mechanics: []
+    //     }
+    // };
+    //
+    // componentDidMount() {
+    //     var p = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+    //     console.log(p);
+    //     fetch('/api/get-game?id=' + p.id)
+    //         .then(res => res.json())
+    //         .then((data) => {
+    //             this.setState({ game: data.result })
+    //         })
+    //         .catch(console.log)
+    // }
+
     render() {
         var dataPie = {
             labels: ['62%','32%','6%'],
@@ -69,4 +98,4 @@ class Games extends Component {
     }
 }
 
-export default Games;
+export default Profile;
