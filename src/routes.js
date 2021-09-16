@@ -29,7 +29,7 @@ import SpecialOffers from "./views/SpecialOffers";
 const dashboardRoutes = [
   {
     path: "/profile",
-    name: "Profile",
+    name: "Профиль",
     icon: "pe-7s-pen",
     component: Profile,
     layout: "/admin",
@@ -37,7 +37,7 @@ const dashboardRoutes = [
   },
   {
     path: "/special-offers",
-    name: "Special Offers",
+    name: "Предложения",
     icon: "pe-7s-note2",
     component: SpecialOffers,
     layout: "/admin",
