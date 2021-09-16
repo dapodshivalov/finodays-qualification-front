@@ -4,41 +4,76 @@ import ChartistGraph from 'react-chartist';
 
 import Card from "components/Card/Card.jsx";
 import CategoriesList from "../components/CategoriesList/CategoriesList";
+import qs from "query-string";
+
 
 class Profile extends Component {
-    // state = {
-    //     charts: {
-    //         id: -1,
-    //         name: "",
-    //         pictureUrl: "",
-    //         playerMinAge: 0,
-    //         playersMinAmount: 0,
-    //         playersMaxAmount: 0,
-    //         duration: 0,
-    //         releaseYear: 0,
-    //         rating: 0,
-    //         categories: [],
-    //         families: [],
-    //         designers: [],
-    //         mechanics: []
-    //     }
-    // };
-    //
-    // componentDidMount() {
-    //     var p = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
-    //     console.log(p);
-    //     fetch('/api/get-game?id=' + p.id)
-    //         .then(res => res.json())
-    //         .then((data) => {
-    //             this.setState({ game: data.result })
-    //         })
-    //         .catch(console.log)
-    // }
+    state = {
+        categories: {
+            predict: [
+                {
+                    categoryId: 5921,
+                    categoryDescription: "5921 Package Stores - Beer, Liqu",
+                    amount: -564.99
+                }
+            ],
+            "8.2021": [
+                {
+                    categoryId: 5921,
+                    categoryDescription: "5921 Package Stores - Beer, Liqu",
+                    amount: -564.99
+                },
+                {
+                    categoryId: 5921,
+                    categoryDescription: "5921 Package Stores - Beer, Liqu",
+                    amount: -564.99
+                },
+                {
+                    categoryId: 5921,
+                    categoryDescription: "5921 Package Stores - Beer, Liqu",
+                    amount: -564.99
+                }
+            ]
+        },
+        transactions: [
+            {
+                clientId: 1,
+                cardId: 357,
+                timestamp: 18840,
+                amount: 2260.0,
+                currency: "RUR",
+                description: "Пополнение 00887751",
+                categoryId: 4829,
+                categoryDescription: "4829 Money Transfer",
+                credit: false
+            }
+        ]
+    };
+
+    componentDidMount() {
+        var p = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+        console.log(p);
+        fetch('http://localhost:8080/get-categories-stat?id=' + p.id)
+            .then(res => res.json())
+            .then((data) => {
+                var transactions = data.result;
+                fetch('http://localhost:8080/get-transactions?id=' + p.id)
+                    .then(res => res.json())
+                    .then((d) => {
+                        this.setState({
+                            categories: d.result,
+                            transactions: transactions
+                        })
+                    })
+                    .catch(console.log);
+            })
+            .catch(console.log);
+    }
 
     render() {
         var dataPie = {
-            labels: ['62%','32%','6%'],
-            series: [62, 32, 6]
+            labels: this.state.categories["8.2021"].map(el => el.categoryDescription),
+            series: this.state.categories["8.2021"].map(el => -el.amount)
         };
         var options = {
             donut: true
@@ -48,10 +83,10 @@ class Profile extends Component {
                 <Grid fluid>
                     <Row>
                         <Col md={6}>
-                            <a href="admin/games?year=2015">Previous year</a>
+                            {/*<a href="admin/games?year=2015">Previous year</a>*/}
                             <Card
-                                title={"Categories rated by " + 2016}
-                                category="Select a category"
+                                title={"Траты по категориям " + 2016}
+                                // category="Select a category"
                                 ctTableFullWidth
                                 ctTableResponsive
                                 content={
