@@ -9,7 +9,19 @@ class Games extends Component {
     render() {
         var dataPie = {
             labels: ['62%','32%','6%'],
-            series: [62, 32, 6]
+            series: [{
+                value: 20,
+                name: 'Series 1',
+                meta: 'Meta One'
+              }, {
+                value: 10,
+                name: 'Series 2',
+                meta: 'Meta Two'
+              }, {
+                value: 70,
+                name: 'Series 3',
+                meta: 'Meta Three'
+              }]
         };
         var options = {
             donut: true
@@ -29,7 +41,7 @@ class Games extends Component {
                                     // <CategoriesList type="categories"/>
                                     <div className="row">
                                         <div className="col" style={{maxHeight:"320px"}}>
-                                            <ChartistGraph data={dataPie} type="Pie" options={options}/>
+                                            <ChartistGraph className="ch-chart" data={dataPie} type="Pie" options={options}/>
                                         </div>
                                     </div>
 

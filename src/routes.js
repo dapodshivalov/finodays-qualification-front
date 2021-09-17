@@ -43,22 +43,6 @@ const dashboardRoutes = [
     layout: "/admin",
     hidden: false
   },
-  {
-    path: "/games",
-    name: "Games",
-    icon: "pe-7s-ticket",
-    component: Games,
-    layout: "/admin",
-    hidden: false
-  },
-  {
-    path: "/user",
-    name: "Edit",
-    icon: "pe-7s-pen",
-    component: UserProfile,
-    layout: "/admin",
-    hidden: false
-  },
   // {
   //   path: "/table",
   //   name: "Table List",

@@ -31,8 +31,9 @@ import AdminLayout from "layouts/Admin.jsx";
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/games" />
+      <Route path="/admin/:iserId" render={props => <AdminLayout {...props} />} />
+      <Redirect from="/admin/:userId" to="/admin/profile/:userId" />
+      <Redirect from="/:userId" to="/admin/profile/:userId" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")
