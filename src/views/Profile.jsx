@@ -11,6 +11,8 @@ import Select from 'react-select'
 import { catCompareReverse, getRusMonth, getYear, labelForSelectOption } from "utils/utils.jsx";
 import DonutGraph from "components/DonutGraph/DonutGraph.jsx";
 import BarGraph from "components/BarGraph/BarGraph.jsx";
+import { URL_BASE } from "variables/const.jsx"
+
 
 
 
@@ -92,37 +94,49 @@ class Profile extends Component {
                 categoryDescription: "4829 Money Transfer",
                 credit: false
             }
-        ]
+        ],
+        deposit: {
+            monthlyAmount: 100,
+            profit: 20.0
+        },
+        loan: 10.0
     };
 
     componentDidMount() {
         console.log("componentDidMount");
+        console.log(this.state);
         console.log(this.props);
 
         const pathSplitted = this.props.location.pathname.split("/");
         var id = parseInt(pathSplitted[pathSplitted.length - 1]);
         console.log(id);
-        var pathBase = 'http://localhost:8080';
-        var getCatsPath = pathBase + '/get-categories-stat?id=' + id;
-        var getTransactionsPath = pathBase + '/get-transactions?id=' + id;
-        console.log(getCatsPath);
-        console.log(getTransactionsPath);
-        fetch(getCatsPath)
-            .then(res => res.json())
-            .then((data) => {
-                var transactions = data.result;
-                fetch(getTransactionsPath)
-                    .then(res => res.json())
-                    .then((d) => {
-                        var categories = d.result;
-                        var monthes = Object.entries(categories).map(entry => entry.key);
-                        this.setState({
-                            curMonth: monthes[monthes.length - 1],
-                            categories: categories,
-                            transactions: transactions
-                        })
-                    })
-                    .catch(console.log);
+        var pathBase = URL_BASE;
+        Promise.all([
+                fetch(pathBase + '/api/get-deposit?id=' + id),
+                fetch(pathBase + '/api/get-loan?id=' + id),
+                fetch(pathBase + '/get-categories-stat?id=' + id),
+                fetch(pathBase + '/get-transactions?id=' + id)
+            ])
+
+            .then(([res1, res2, res3, res4]) => {
+                return Promise.all([res1.json(), res2.json(), res3.json(), res4.json()])
+            })
+            .then(([res1, res2, res3, res4]) => {
+                var transactions = res3.result;
+                var categories = res4.result;
+                var monthes = Object.entries(categories).map(entry => entry.key);
+                this.setState(
+                    {
+                        curMonthYear: monthes[monthes.length - 1],
+                        categories: categories,
+                        transactions: transactions,
+                        deposit: {
+                            monthlyAmount: parseInt(res1.result.monthlyAmount),
+                            profit: parseInt(res1.result.profit)
+                        },
+                        loan: parseInt(res2.result)
+                    }
+                )
             })
             .catch(console.log);
     }
@@ -190,6 +204,76 @@ class Profile extends Component {
                                 content={
                                     // <CategoriesList type="categories"/>
                                     <BarGraph categories={this.state.categories} curMonthYear={this.state.curMonthYear}/>
+                                }
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col md={12}>
+
+                            <Card
+                                title={"Вклады"}
+                                category="Инвестируйте свои сбережния"
+                                ctTableFullWidth
+                                ctTableResponsive
+                                content={
+                                    <Row>
+                                    <Col md={3}>
+                                        <img
+                                            src="https://www.psbank.ru/-/media/Images/Product-Images/Saving_mini/strong-ovi.jpg?la=ru-RU&hash=D93526C6BD0FC01A515BDD4FC6031BEB422882F2"
+                                            alt="new"
+                                            height={144}
+                                            width={216}
+                                            style={{borderRadius: 10, marginLeft: 15}}
+                                        />
+                                    </Col>
+                                        <Col>
+                                            <div style={{fontSize: 20}}>
+                                                Вы можете откладывать <b>{this.state.deposit.monthlyAmount} руб.</b> каждый месяц
+                                            </div>
+                                            <div style={{fontSize: 20, marginTop: 6}}>
+                                                И получите выгоду через год с вклада <b>{this.state.deposit.profit} руб.</b>
+                                            </div>
+                                            <div style={{fontSize: 20, marginTop: 50}}>
+                                                <a href={'https://www.psbank.ru/Personal/Saving'} target="_blank">Открыть вклад</a>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                }
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
+                            <Card
+                                title={"Кредиты"}
+                                category="Для самого необходимого"
+                                ctTableFullWidth
+                                ctTableResponsive
+                                content={
+                                    <Row>
+                                        <Col md={3}>
+                                            <img
+                                                src="https://www.psbank.ru/-/media/Images/Product-Images/Saving_mini/Moi_dohod_720x480_1.jpg?la=ru-RU&hash=D44D184626A044951AB2CC79BD60DD5A10C62298"
+                                                alt="new"
+                                                height={144}
+                                                width={216}
+                                                style={{borderRadius: 10, marginLeft: 15}}
+                                            />
+                                        </Col>
+                                        <Col>
+                                            <div style={{fontSize: 20}}>
+                                                Вы сможете выплачивать кредит
+                                            </div>
+                                            <div style={{fontSize: 20, marginTop: 6}}>
+                                                со своих сбережний на сумму: <b>{this.state.loan} руб.</b>
+                                            </div>
+                                            <div style={{fontSize: 20, marginTop: 50}}>
+                                                <a href={'https://www.psbank.ru/Personal/Loans'} target="_blank">Взять кредит</a>
+                                            </div>
+                                        </Col>
+                                    </Row>
                                 }
                             />
                         </Col>

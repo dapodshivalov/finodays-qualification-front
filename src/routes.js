@@ -35,14 +35,14 @@ const dashboardRoutes = [
     layout: "/admin",
     hidden: false
   },
-  {
-    path: "/special-offers",
-    name: "Предложения",
-    icon: "pe-7s-note2",
-    component: SpecialOffers,
-    layout: "/admin",
-    hidden: false
-  },
+  // {
+  //   path: "/special-offers",
+  //   name: "Предложения",
+  //   icon: "pe-7s-note2",
+  //   component: SpecialOffers,
+  //   layout: "/admin",
+  //   hidden: false
+  // },
   // {
   //   path: "/table",
   //   name: "Table List",
