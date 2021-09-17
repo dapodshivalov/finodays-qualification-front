@@ -4,6 +4,7 @@ import ChartistGraph from 'react-chartist';
 
 import Card from "components/Card/Card.jsx";
 import CategoriesList from "../components/CategoriesList/CategoriesList";
+import TransactionList from "../components/TransactionsList/TransactionsList";
 import qs from "query-string";
 
 
@@ -101,28 +102,16 @@ class Profile extends Component {
                             />
                         </Col>
                     </Row>
+
                     <Row>
                         <Col md={12}>
                             <Card
-                                title="Game Mechanics"
-                                category="Select a mechanic"
+                                title="История транзакций"
+
                                 ctTableFullWidth
                                 ctTableResponsive
                                 content={
-                                    <CategoriesList type="mechanics"/>
-                                }
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={12}>
-                            <Card
-                                title="Game Designers"
-                                category="Select a mechanic"
-                                ctTableFullWidth
-                                ctTableResponsive
-                                content={
-                                    <CategoriesList type="designers"/>
+                                    <TransactionList transactions={this.state.transactions}/>
                                 }
                             />
                         </Col>
